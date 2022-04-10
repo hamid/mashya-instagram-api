@@ -6,8 +6,13 @@
   "exclude": [
     "node_modules"
   ],
+  "files": [
+    
+  ],
   "compilerOptions": {
     "outDir": "dist",
+    "sourceMap": true,
+    "declaration": true,
     // "target": "es5",
     // "module": "commonjs",
     // "lib": [
