@@ -4,11 +4,11 @@ const fs    = require('fs');
 let User = {
 
     saveUserCookie: async (uname:string, content:string) => {
-        return fs.writeFileSync('./storage/userStorage/' + uname + ".txt", content);
+        return fs.writeFileSync('./storage/' + uname + ".txt", content);
     },
 
     loadUserCookie: async (uname:string) => {
-        var path = './storage/userStorage/' + uname + ".txt";
+        var path = './storage/' + uname + ".txt";
         if (fs.existsSync(path)) {
             return fs.readFileSync(path, 'utf8');
         }
