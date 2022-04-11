@@ -12,7 +12,8 @@
             ],
             "args": [
                 "${workspaceRoot}/src/main.ts"
-            ]
+            ],
+            "console":"integratedTerminal"
         }
     ]
 }

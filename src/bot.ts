@@ -18,14 +18,16 @@ import type { loginActionInput } from './types/loginAction'
          browser: BROWSER.chromium,
          headless:false,
          slowMo:10,
-         doScreenshotInError:true,
+         log:true,
+         logScreenshot:true
      }
      private _defaultPrdOptions: optionsInterface ={
          isDevelopment:false,
          browser: BROWSER.chromium,
          headless:true,
          slowMo:300,
-         doScreenshotInError: true,
+         log: true,
+         logScreenshot: false
      }
      public  options: optionsInterface = { ...this._defaultDevOptions };
      private browserPersistentContextPrefix : string = "instagram";
@@ -57,7 +59,7 @@ import type { loginActionInput } from './types/loginAction'
      
      private async _createBrowserBot(){
          let browserObj         = { chromium,webkit,firefox };
-         let browserContextName = "storage/"+this.browserPersistentContextPrefix + "-" +this.options.botName;
+         let browserContextName = "./storage/"+this.browserPersistentContextPrefix + "-" +this.options.botName;
          this.browser          = await browserObj[this.options.browser!].launchPersistentContext(browserContextName,this.options);
          this.browserPage      = await this.browser.newPage();
          // await page.screenshot({ path: `example.png` });

@@ -2,6 +2,7 @@ import type { BrowserContext, Page }                from 'playwright';
 import { BaseSubActionClass, BaseActionInterface }  from '../BaseActionClass';
 import User                                         from '../../services/user';
 import type { loginActionInput }                    from '../../types/loginAction';
+import colors from 'ansi-colors';
 
 
 export default class LoginAction extends BaseSubActionClass implements BaseActionInterface
@@ -10,7 +11,7 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
     protected input     : loginActionInput;
 
     constructor(input:loginActionInput){
-        super();
+        super(); // --> it's important
         this.input = input;
     }
 
@@ -27,65 +28,59 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
             //-- clear cookie
             await browser.clearCookies();
 
-            // Set cookies in a new context
+            this.setLog("1-Clear cookies of browser ",{percent: 20 });
             await this.setUserCookieIfExist(input.uname)
 
-            // go to main site
-            await page.goto("https://www.instagram.com/", { timeout: 80000 });
-            await bot.delay("low");
+            this.setLog("2-Opening the instagram.com",{ percent: 30 });
+            await this.gotoMainSite();
 
-            // -- detect if is blocked in login
+            this.setLog("3-Detect if is blocked", { percent: 40 });
             var isBlock = await this.isBlocked(input);
             if (isBlock)
-                throw { code: -1, mes:`Unfortunately the Account(${input.uname}) is blocked by instagram.`};
+                throw new Error(`Unfortunately the Account(${input.uname}) is blocked by instagram.`);
 
-            // -- click on `Not now` notification popup
+            this.setLog("4-Click on Not now notification popup", { percent: 50 });
             await this.setNotNowNotification();
-            await bot.delay("low");
 
-            // -- click on `Acept` Cookie
+            this.setLog("5-Click on `Acept` Cookie", { percent: 60 });
             await this.cookieAllowAction();
-            await bot.delay("low");
+            
 
 
             // // -- if log out or cookie is unvalid  -> log in again
             if ( await this.hasLogouted() )
             {
-                //-- if in mobile view and it should click on log in to show the uname and pass input
+                this.setLog("6-it's first time or logouted", { percent: 65 });
                 await this.clickLoginBtnInMobileViewport()
 
-                //-- fill the login form
+                this.setLog("7-Fill the login form", { percent: 70 });
                 await this.fillLoginForm(input.uname,input.password);
-                await bot.delay("high");
 
 
-                // if login fails  -> throw error
+                this.setLog("8-checking username and password", { percent: 75 });
                 if (await this.isUnameOrPasswordWrong())
-                    throw { code: -1, mes: `Unfortunately your uname or password is incorrect. Please double-check your uname or password.` };
+                    throw new Error(`Unfortunately your uname or password is incorrect. Please double-check your uname or password.`)
 
-                // -- detect if is blocked in login
+                this.setLog("9-checking if the account has blocked", { percent: 80 });
                 var isBlock = await this.isBlocked(input);
                 if (isBlock)
-                    throw { code: -1, mes: `Unfortunately the Account(${input.uname}) is blocked by instagram.` };
+                    throw new Error(`Unfortunately the Account(${input.uname}) is blocked by instagram.`);
 
                 await this.setNotNowNotification();
-                await bot.delay("low");
 
-                // if save info alert -> click not now
+                this.setLog("10-click not now if save info alert had shown", { percent: 85 });
                 await this.saveLoginInfoAlert()
-                await bot.delay("medium");
                 
+                this.setLog("11-Save user cookie", { percent: 95 });
                 await this.saveUserCookie(input.uname);
             }
 
+
             bot.isLogin     = true;
-            
-            console.log('[ Instagram  Action -> setUserCookieAndLogin]  log in to account -> ...', input);
-
-
+            this.completeLog()
 
         } catch (e) {
-            console.log('error in Action -> [setUserCookieAndLogin] ------>', e);
+            this.errorLog(e);
         }
     }
 
@@ -93,12 +88,19 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
 
     public async setUserCookieIfExist(uname:string)
     {
-        await this.page.click("text='bdfjhskcna'", { timeout: 2000 });
+
         var userCookie = await User.loadUserCookie(uname);
         if (userCookie) {
             const deserializedCookies = JSON.parse(userCookie)
             await this.browser.addCookies(deserializedCookies);
         };
+    }
+
+    public async gotoMainSite()
+    {
+
+        await this.page.goto("https://www.instagram.com/", { timeout: 80000 });
+        await this.bot.delay("low");
     }
 
     public async isBlocked(input?:loginActionInput)
@@ -124,6 +126,7 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
         if (hasEnablenotification && hasEnablenotification.length) {
             await page.click("text=Not Now", { timeout: 3000, force: false });
         }
+        await this.bot.delay("low");
     }
 
     public async hasLogouted():Promise<boolean>{
@@ -138,8 +141,8 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
         await page.type("[name=username]", uname);
         await page.type("[name=password]", password);
         await page.click("[type=submit]");
-        await this.bot.delay("low");
         await page.waitForLoadState('networkidle');
+        await this.bot.delay("high");
     }
 
     public async clickLoginBtnInMobileViewport()
@@ -181,12 +184,16 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
                 await page.waitForLoadState('networkidle');
             }
         }
+        await this.bot.delay("low");
     }
 
 
     public async isUnameOrPasswordWrong():Promise<boolean>{
         var hasFailedLogin = await this.page.$$("text=Sorry, your password was incorrect. Please double-check your password.");
         if (hasFailedLogin && hasFailedLogin.length)
+            return true;
+        var hasFailedLogin2 = await this.page.$$("text=Please check your username and try again");
+        if (hasFailedLogin2 && hasFailedLogin2.length)
             return true;
         return false;
     }
@@ -199,6 +206,7 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
         var hasSaveInfo = await this.page.$$("text=Save Your Login Info?");
         if (hasSaveInfo && hasSaveInfo.length) {
             await this.page.click("text=Not Now", { timeout: 3000, force: false });
+            await this.bot.delay("medium");
         }
     }
 

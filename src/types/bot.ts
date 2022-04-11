@@ -4,7 +4,8 @@ export interface optionsInterface {
     browser        ?: BROWSER
     headless       ?: boolean
     slowMo         ?: number
-    doScreenshotInError  ?: boolean
+    log            ?: boolean
+    logScreenshot  ?: boolean
 
 }
 export enum BROWSER {
