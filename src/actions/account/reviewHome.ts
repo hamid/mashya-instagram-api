@@ -62,7 +62,7 @@ export default class ReviewHome extends BaseSubActionClass implements BaseAction
         let postCount       = this.input.postReviewCount ?? 10;
         let bot             = this.bot;
 
-        var list = await page.$$('._8Rm4L');
+        var list = await Post.findAllPostsElementFromHome(page);
         if (list && list.length)
             for (let i = 0; i < postCount; i++)
             {
@@ -77,14 +77,14 @@ export default class ReviewHome extends BaseSubActionClass implements BaseAction
                     await bot.delay("low");
 
                     if (postCallback){
-                        var postElm: Locator = await page.locator('._8Rm4L').nth(index);
-                        var currentPost              = await this._buildHomePost(postElm,index);
+                        var postElm      : Locator      = await Post.findPostLocatorFromHome(page).nth(index);
+                        var currentPost                 = await this._buildHomePost(postElm,index);
                         if(currentPost.link)
                             await postCallback(currentPost, i);
                     }
                     await bot.delay("low");
                     // refresh list    
-                    list = await page.$$('._8Rm4L');
+                    list = await Post.findAllPostsElementFromHome(page);
                 }
             }
     }

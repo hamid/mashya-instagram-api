@@ -21,10 +21,18 @@ export default class Post extends BaseActionClass{
     public async loadPostByElement(element: Locator){
         this.element     = element;
         this.isInPostUrl = false;
+        return this;
     }
 
     public async loadPostByUrl(url:string){
+        await this.page.goto(url);
+        this.element        = await Post.findPostLocatorFromPostPage(this.page).first();
+        this.isInPostUrl    = true;
+        return this;
     }
+
+
+    
 
     public async gotoPostUrl(){
         //- first way : click on comment icon
@@ -36,11 +44,12 @@ export default class Post extends BaseActionClass{
             let parentBtn = await commentBtn.nth(1);
             // let parent    =  await parentBtn.$('xpath=..');
             await parentBtn.click();
-            this.element = await this.page.locator('[role="dialog"]').first();
+            this.element = await Post.findPostLocatorFromHomeDialog(this.page).first();
             await this.bot.delay("high");
         }
         //- secend way : go directly to post link
         //...
+        return this;
     }
 
     public async like(){
@@ -80,6 +89,23 @@ export default class Post extends BaseActionClass{
         }
             
         return this;
+    }
+
+
+    /* - STATIC - */
+
+    //-- Find Element/Locator in page
+    public static findPostLocatorFromHome(page: Page): Locator {
+        return page.locator('._8Rm4L');
+    }
+    public static findAllPostsElementFromHome(page: Page): Promise<ElementHandle[]> {
+        return page.$$('._8Rm4L');
+    }
+    public static findPostLocatorFromHomeDialog(page: Page): Locator {
+        return page.locator('[role="dialog"]')
+    }
+    public static findPostLocatorFromPostPage(page: Page): Locator {
+        return page.locator('[role="presentation"]')
     }
     
     
