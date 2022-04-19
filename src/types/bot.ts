@@ -6,6 +6,8 @@ export interface optionsInterface {
     slowMo         ?: number
     log            ?: boolean
     logScreenshot  ?: boolean
+    chromiumSandbox?: boolean
+    locale         ?: string
 
 }
 export enum BROWSER {

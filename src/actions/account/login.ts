@@ -7,13 +7,16 @@ import colors from 'ansi-colors';
 
 export default class LoginAction extends BaseSubActionClass implements BaseActionInterface
 {
-    public actionName   : string = "login";
+    public actionName   : string = "Login";
+    public needLogin    : boolean = false;
     protected input     : loginActionInput;
 
     constructor(input:loginActionInput){
         super(); // --> it's important
         this.input = input;
     }
+
+    
 
     public async start(){
         try {
@@ -71,9 +74,16 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
                 this.setLog("10-click not now if save info alert had shown", { percent: 85 });
                 await this.saveLoginInfoAlert()
                 
-                this.setLog("11-Save user cookie", { percent: 95 });
+                this.setLog("11-Save user cookie", { percent: 90 });
                 await this.saveUserCookie(input.uname);
+
             }
+
+            this.setLog("clicking Save info button in modal to save login info to browser", { percent: 95 });
+            await this.doSaveBrowserLoginInfoModal()
+
+            this.setLog("if show follow page,follow some suggested acount ", { percent: 95 });
+            await this.FollowSuggestedAcount();
 
 
             bot.isLogin     = true;
@@ -108,8 +118,12 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
         let page    = this.page;
 
         // -- click on no notification popup
-        var hasblock = await page.$$("text=Confirm it's You to Login");
+        var hasblock = await page.$$("text=Confirm it's You");
         if (hasblock && hasblock.length) {
+            return true;
+        }
+        var hasblock2 = await page.$$("text=We noticed unusual activity");
+        if (hasblock2 && hasblock2.length) {
             return true;
         }
         return false
@@ -196,6 +210,27 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
         if (hasFailedLogin2 && hasFailedLogin2.length)
             return true;
         return false;
+    }
+
+    public async doSaveBrowserLoginInfoModal() {
+        let page = this.page;
+        var hasUnusualActivity = await page.$$("text=Save Your Login Info");
+        if (hasUnusualActivity && hasUnusualActivity.length) {
+            await this.page.click("text=Save Info");
+            await this.bot.delay("medium");
+        }
+    }
+
+    protected async FollowSuggestedAcount() {
+        var followPages = await this.page.$$("text='Follow'");
+        if (followPages && followPages.length){
+            // await followPages[0].click();
+            // click `get started` 
+            var getstartBtn = await this.page.$$("text=Get Started");
+            if (getstartBtn && getstartBtn.length)
+                await getstartBtn[0].click();
+
+        }
     }
 
 

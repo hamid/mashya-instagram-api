@@ -2,10 +2,12 @@ import type { optionsInterface } from '../src/types/bot'
 import { BROWSER } from '../src/types/bot'
 import {chromium, firefox, webkit,}   from 'playwright';
 import type { BrowserType, BrowserContext, Page } from 'playwright';
+import colors from 'ansi-colors';
 
 // load actions
-import Account, { AccountInterface } from './actions/account/AccountClass';
-import type { loginActionInput } from './types/loginAction'
+import Account, { AccountInterface }    from './actions/account/AccountClass';
+import Post,{ PostInterface}            from './actions/post/PostClass'
+
 
 
 
@@ -19,7 +21,9 @@ import type { loginActionInput } from './types/loginAction'
          headless:false,
          slowMo:10,
          log:true,
-         logScreenshot:true
+         logScreenshot:true,
+         chromiumSandbox: true,
+         locale: 'en-US',
      }
      private _defaultPrdOptions: optionsInterface ={
          isDevelopment:false,
@@ -27,7 +31,9 @@ import type { loginActionInput } from './types/loginAction'
          headless:true,
          slowMo:300,
          log: true,
-         logScreenshot: false
+         logScreenshot: false,
+         chromiumSandbox: true,
+         locale: 'en-US',
      }
      public  options: optionsInterface = { ...this._defaultDevOptions };
      private browserPersistentContextPrefix : string = "instagram";
@@ -40,6 +46,7 @@ import type { loginActionInput } from './types/loginAction'
 
      /* -- actions -- */
      public account        !:  Account;
+     public post           !:  Post;
 
 
 
@@ -58,6 +65,7 @@ import type { loginActionInput } from './types/loginAction'
      }
      
      private async _createBrowserBot(){
+         this._createAsciiTextInConsole();
          let browserObj         = { chromium,webkit,firefox };
          let browserContextName = "./storage/"+this.browserPersistentContextPrefix + "-" +this.options.botName;
          this.browser          = await browserObj[this.options.browser!].launchPersistentContext(browserContextName,this.options);
@@ -69,6 +77,9 @@ import type { loginActionInput } from './types/loginAction'
      private async _loadMainActions(){
          this.account = new Account();
          this.account.setBrowser(this,this.browser,this.browserPage);
+
+         this.post = new Post();
+         this.post.setBrowser(this,this.browser,this.browserPage);
      }
 
 
@@ -110,7 +121,25 @@ import type { loginActionInput } from './types/loginAction'
          await this.browserPage.screenshot({ path: `./screenshot/${filename}.jpg` });
      }
 
+     public async _createAsciiTextInConsole(){
+         let botname = colors.magentaBright(this.options.botName??"");
+         console.log(`
 
+-------------------------
+.   ,         .
+|\\ /|         |
+| V | ,-: ,-. |-. . . ,-:
+|   | | | \`-. | | | | | |
+'   ' \`-\` \`-' ' ' \`-| \`-\`
+                  \`-'     
+-------------------------
+     Instagram  Bot
+.........................
+-⎆ ${botname} 
+-------------------------
+
+`);
+     }
     
     
 
