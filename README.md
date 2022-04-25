@@ -1,6 +1,6 @@
 # mashya-instagram-api
 <p align="center">
-<a href="#examples"><img width="322" align="center" alt=" github.com/hamid  mashya instagram api" src="https://user-images.githubusercontent.com/1645233/165082744-c247ad88-a223-4ff1-96af-b0d1fbfd12f2.png"></a>
+<a href="#And ... What's Mashya?"><img width="322" align="center" alt=" github.com/hamid  mashya instagram api" src="https://user-images.githubusercontent.com/1645233/165082744-c247ad88-a223-4ff1-96af-b0d1fbfd12f2.png"></a>
   </p>
 
  NodeJS Instagram API.it's like bot that simulate main instagram action, login, register, post, story, like, follow, ...
@@ -22,6 +22,11 @@
    
 
 *( and to be developing ...)*
+
+---
+![mashya-instagram-api](https://user-images.githubusercontent.com/1645233/165092167-acce8887-b5d5-4156-8cd5-4e09278f1243.gif)
+
+
 
 
 # Table of Contents
@@ -147,3 +152,17 @@ After create successfully the bot, you could all run available commands. these c
 
 
 
+## And ... What's Mashya?
+
+<p align="center">
+<img width="322" align="center" alt=" github.com/hamid  mashya instagram api" src="https://user-images.githubusercontent.com/1645233/165082744-c247ad88-a223-4ff1-96af-b0d1fbfd12f2.png"></p>
+According to persian mythology, Mashya and Mashyana were the first man and woman whose procreation gave rise to the human race based on Zoroastrian cosmology.
+Based on Bundahishn, When Ahriman (devil) invaded the world of AhuraMazda, Kiomars were killed by evil spirits.
+Kiomars fell into his left hand at his death, and sperm came out of him. The sperm of Kiomars remained on the earth for forty years. And in forty years, with the shape of a one-stemed Rivas-plant, Mashya and Mashyana grew up from the earth. They were so connected together that it was not clear which is the male and which the female. They learned farming, lighting fire, and milking goats from angels.
+They did not have sex for fifty years, and sexual desire awoke in them after this time. From them was born in nine month a pair, and owing to tenderness for offspring the mother devoured one, and the father one.
+AhuraMazda took this tenderness away, so that one may nourish a child. After that, seven pairs of male and female offspring emerged from them, who are believed to be the human race's ancestors.
+
+-------
+##### Research: [Zeinab hashemii](https://www.instagram.com/zeinab_hashemii)
+##### Painter: [Mohammad Naghashbashi](https://www.instagram.com/mo.rasoulipour)
+-------
