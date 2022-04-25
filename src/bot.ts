@@ -1,5 +1,5 @@
-import type { optionsInterface } from '../src/types/bot'
-import { BROWSER } from '../src/types/bot'
+import type { optionsInterface } from './types/bot'
+import { BROWSER } from './types/bot'
 import {chromium, firefox, webkit,}   from 'playwright';
 import type { BrowserType, BrowserContext, Page } from 'playwright';
 import colors from 'ansi-colors';
