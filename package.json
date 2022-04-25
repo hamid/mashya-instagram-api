@@ -1,6 +1,6 @@
 {
   "name": "mashya-instagram-api",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "",
   "main": "dist/bot.js",
   "engines": {
@@ -32,13 +32,13 @@
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "eslint": "^8.12.0",
+    "playwright": "^1.20.2",
     "rimraf": "^3.0.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   },
   "dependencies": {
     "ansi-colors": "^4.1.1",
-    "cli-progress": "^3.10.0",
-    "playwright": "^1.20.2"
+    "cli-progress": "^3.10.0"
   }
 }
