@@ -1,15 +1,15 @@
 {
   "name": "mashya-instagram-api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "dist/bot.js",
   "engines": {
     "node": ">=12.0.0"
   },
   "scripts": {
     "build": "rimraf ./dist && tsc",
-    "start": "npm run build && node dist/main.js",
-    "start:dev": "npx ts-node src/main.ts",
+    "start": "npm run build && node dist/example.js",
+    "start:dev": "npx ts-node src/example.ts",
     "lint": "eslint . --fix",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
