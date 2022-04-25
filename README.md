@@ -101,10 +101,10 @@ Requires 10.14 (Mojave) or above.
 ```sh
 npm i -D playwright
 ```
-2) and then install the bot from npm
+2) and then install the package from npm
 
 ```
-npm install instagram-private-api
+npm install mashya-instagram-api
 ```
 
 ### Install and run in Linux
@@ -117,13 +117,13 @@ and in your *Dockerfile*
 ```Containerfile
 FROM mcr.microsoft.com/playwright:bionic
 ...
-npm install instagram-private-api
+npm install mashya-instagram-api
 ```
 ##### or Install dependencies
 If you don't want use Docker, depending on your Linux distribution, you might need to install additional dependencies to run the bots.see [playwright install](https://playwright.dev/docs/library#linux)
 ```sh
 npx playwright install --with-deps chromium
-npm install instagram-private-api
+npm install mashya-instagram-api
 ```
 
 
