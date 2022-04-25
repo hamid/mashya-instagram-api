@@ -7,6 +7,7 @@ import colors from 'ansi-colors';
 // load actions
 import Account, { AccountInterface }    from './actions/account/AccountClass';
 import Post,{ PostInterface}            from './actions/post/PostClass'
+import InstaPage                        from './actions/page/PageClass';
 
 
 
@@ -47,6 +48,7 @@ import Post,{ PostInterface}            from './actions/post/PostClass'
      /* -- actions -- */
      public account        !:  Account;
      public post           !:  Post;
+     public page           !:  InstaPage;
 
 
 
@@ -80,6 +82,9 @@ import Post,{ PostInterface}            from './actions/post/PostClass'
 
          this.post = new Post();
          this.post.setBrowser(this,this.browser,this.browserPage);
+
+         this.page =  new InstaPage()
+         this.page.setBrowser(this, this.browser, this.browserPage);
      }
 
 
