@@ -44,10 +44,12 @@ _Note for JavaScript users:_
 As of Node v.13.5.0, there isn't support for ESModules and the 'import'-syntax.
 So you have to read the imports in the examples like this:
 
-`import { A } from 'b'` ➡ `const { A } = require('b')`
+`import A from 'b'` ➡ `const { A } = require('b').default`
 
 ```typescript
 import MashyaInstagramBot from 'mashya-instagram-api';
+// or
+const MashyaInstagramBot = require('mashya-instagram-api').default;
 
 
 (async () => {
