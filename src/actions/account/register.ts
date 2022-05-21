@@ -167,10 +167,12 @@ export default class RegisterAction extends LoginAction implements BaseActionInt
     }
 
     private async _fetchCodefromFile():Promise<string>{
+        var storagePath = this.bot.options.storagePath??"";
         return new Promise(async function (resolve, reject) {
             var count   = 0;
-            var path    = './storage/verify.txt';
-            const fs    = require('fs');
+            
+            var path        = storagePath+'verify.txt';
+            const fs        = require('fs');
 
             var timeFlag: NodeJS.Timer = setInterval(async () => {
                 if (count > 100) {

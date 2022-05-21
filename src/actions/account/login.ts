@@ -98,7 +98,7 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
 
     public async setUserCookieIfExist(uname:string)
     {
-
+        User.setStoragePath(this.bot.options.storagePath);
         var userCookie = await User.loadUserCookie(uname);
         if (userCookie) {
             const deserializedCookies = JSON.parse(userCookie)
@@ -138,7 +138,7 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
         // -- click on no notification popup
         var hasEnablenotification = await page.$$("text=Turn on Notifications");
         if (hasEnablenotification && hasEnablenotification.length) {
-            await page.click("text=Not Now", { timeout: 3000, force: false });
+            await page.click("text=Not Now");
         }
         await this.bot.delay("low");
     }
@@ -203,6 +203,8 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
 
 
     public async isUnameOrPasswordWrong():Promise<boolean>{
+        if (!this.page.$$)
+            return false;
         var hasFailedLogin = await this.page.$$("text=Sorry, your password was incorrect. Please double-check your password.");
         if (hasFailedLogin && hasFailedLogin.length)
             return true;
@@ -247,6 +249,7 @@ export default class LoginAction extends BaseSubActionClass implements BaseActio
 
     public async saveUserCookie(uname: string) {
         const cookies = await this.browser.cookies();
+        User.setStoragePath(this.bot.options.storagePath);
         await User.saveUserCookie(uname, JSON.stringify(cookies));
     }
 

@@ -25,6 +25,7 @@ import InstaPage                        from './actions/page/PageClass';
          logScreenshot:true,
          chromiumSandbox: true,
          locale: 'en-US',
+         storagePath: './storage/',
      }
      private _defaultPrdOptions: optionsInterface ={
          isDevelopment:false,
@@ -35,6 +36,7 @@ import InstaPage                        from './actions/page/PageClass';
          logScreenshot: false,
          chromiumSandbox: true,
          locale: 'en-US',
+         storagePath: './storage/',
      }
      public  options: optionsInterface = { ...this._defaultDevOptions };
      private browserPersistentContextPrefix : string = "instagram";
@@ -69,9 +71,9 @@ import InstaPage                        from './actions/page/PageClass';
      private async _createBrowserBot(){
          this._createAsciiTextInConsole();
          let browserObj         = { chromium,webkit,firefox };
-         let browserContextName = "./storage/"+this.browserPersistentContextPrefix + "-" +this.options.botName;
-         this.browser          = await browserObj[this.options.browser!].launchPersistentContext(browserContextName,this.options);
-         this.browserPage      = await this.browser.newPage();
+         let browserContextName = this.options.storagePath+this.browserPersistentContextPrefix + "-" +this.options.botName;
+         this.browser           = await browserObj[this.options.browser!].launchPersistentContext(browserContextName,this.options);
+         this.browserPage       = await this.browser.newPage();
          // await page.screenshot({ path: `example.png` });
         //  await browser.close();
      }

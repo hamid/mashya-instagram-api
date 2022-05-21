@@ -8,6 +8,7 @@ export interface optionsInterface {
     logScreenshot  ?: boolean
     chromiumSandbox?: boolean
     locale         ?: string
+    storagePath     ?: string
 
 }
 export enum BROWSER {
