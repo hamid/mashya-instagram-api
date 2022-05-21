@@ -1,5 +1,6 @@
 import MashyaInstagramBot from '../src/bot';
-
+// import MashyaInstagramBot from '../dist/bot';
+// const MashyaInstagramBot = require('../dist/bot.js')
 
   
 
@@ -10,12 +11,15 @@ import MashyaInstagramBot from '../src/bot';
         isDevelopment: true,
         logScreenshot:true,
         log:true,
+        storagePath:"./storage/"
     });
     await bot.start()
     await bot.account.login({
-        uname       : "uname",
-        password    : "pass"
+        uname: "uname",
+        password: "pass"
     });
+
+    
 
     //-- load and follow page
     await bot.page.Follow("ted");
@@ -23,7 +27,7 @@ import MashyaInstagramBot from '../src/bot';
     //-- ReviewHome
     await bot.account.reviewHome({
         postReviewCount     : 10,
-        onPostReview        : async (targetPost)=>{
+        onPostReview        : async (targetPost:any)=>{
             // console.log('Post Review ...', targetPost.caption);
             await targetPost.comment("Hello... " + targetPost.owner);
         }
@@ -45,6 +49,13 @@ import MashyaInstagramBot from '../src/bot';
         mail:"mail@gmail.com",
         bio:"the user bio...",
         avatarPath:"./storage/profile-pic2.jpg",
+    })
+
+    //-- Create Post
+    await bot.account.createPost({
+        imagePath: "./storage/post-pic2.jpg",
+        caption: 'first post ...',
+        location: "turkey"
     })
 
 

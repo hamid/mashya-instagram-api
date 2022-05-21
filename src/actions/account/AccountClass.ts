@@ -6,9 +6,11 @@ import type { loginActionInput }     from '../../types/loginAction';
 import type { registerActionInput }     from '../../types/registerAction';
 import type { editPriofileActionInput  }     from '../../types/editProfileAction';
 import type { reviewHomeActionInput  }     from '../../types/reviewHomeAction';
+import type { CreatePostActionInput }       from 'src/types/account/createPost';
 import RegisterAction from './register';
 import EditProfileAction from './editProfile';
 import ReviewHome from './reviewHome';
+import CreatePost from './createPost';
 
 export default class Account extends BaseActionClass{
 
@@ -57,6 +59,17 @@ export default class Account extends BaseActionClass{
         let reviewHome  = new ReviewHome(input)
         reviewHome.setup(bot,browser,page);
         await reviewHome.start();
+        return this;
+    }
+
+    public async createPost(input: CreatePostActionInput){
+
+        let bot         = this.bot;
+        let browser     = this.browser;
+        let page        = this.page;
+        let createPost = new CreatePost(input)
+        createPost.setup(bot,browser,page);
+        await createPost.start();
         return this;
     }
 
