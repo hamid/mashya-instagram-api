@@ -21,6 +21,9 @@ export default class CreatePost extends BaseSubActionClass implements BaseAction
             let imagePath       = this.input.imagePath ?? "";
             let caption         = this.input.caption ?? "";
             let location        = this.input.location ?? "";
+
+            this.setLog("0)Check the input image exists", { percent: 10 });
+            await this.existsFile(imagePath);
             
             this.setLog("1)goto Home Page", { percent: 20 });
             await this.gotoHome();
@@ -28,22 +31,22 @@ export default class CreatePost extends BaseSubActionClass implements BaseAction
             this.setLog("2)Set the image", { percent: 30 });
             await this.setFileGorUpload(imagePath);
 
-            this.setLog("2)Set the image", { percent: 40 });
+            this.setLog("3)Set the image", { percent: 40 });
             await this.page.click('text="Next"');
             await this.bot.delay("medium");
 
-            this.setLog("2)skip edit image", { percent: 50 });
+            this.setLog("4)skip edit image", { percent: 50 });
             await this.page.click('text="Next"');
             await this.bot.delay("low");
 
-            this.setLog("2)Set the caption", { percent: 60 });
+            this.setLog("5)Set the caption", { percent: 60 });
             await this.setCaption(caption);
 
-            this.setLog("2)Set the location", { percent: 70 });
+            this.setLog("6)Set the location", { percent: 70 });
             await this.setLocation(location);
             await this.bot.delay("low");
 
-            this.setLog("2) Uploading image ...", { percent: 75 });
+            this.setLog("7) Uploading image ...", { percent: 75 });
             await this.page.click('text="Share"');
             await this.bot.delay("high");
 
@@ -59,6 +62,16 @@ export default class CreatePost extends BaseSubActionClass implements BaseAction
         }
     }
 
+
+    public async existsFile(filename:string){
+        const fs = require('fs');
+        if (filename && fs.existsSync(filename)) {
+            return true;
+        }else
+        {
+            throw new Error(`Your image is not exists. filePath :${filename}`);
+        }
+    }
 
     public async gotoHome(){
         var homeElm = await this.page.$$("[href='/']");
