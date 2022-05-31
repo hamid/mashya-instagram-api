@@ -15,8 +15,8 @@ import MashyaInstagramBot from '../src/bot';
     });
     await bot.start()
     await bot.account.login({
-        uname: "amir.sedaporian",
-        password: "amir.rgst123456@"
+        uname: "uname",
+        password: "pass"
     });
 
     
