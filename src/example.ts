@@ -15,10 +15,11 @@ import MashyaInstagramBot from '../src/bot';
     });
     await bot.start()
     await bot.account.login({
-        uname: "uname",
-        password: "pass"
+        uname: "amir.sedaporian",
+        password: "amir.rgst123456@"
     });
 
+    
     
 
     //-- load and follow page
@@ -53,7 +54,7 @@ import MashyaInstagramBot from '../src/bot';
 
     //-- Create Post
     await bot.account.createPost({
-        imagePath: "./storage/post-pic2.jpg",
+        imagePath: "./storage/post-pic222.jpg",
         caption: 'first post ...',
         location: "turkey"
     })

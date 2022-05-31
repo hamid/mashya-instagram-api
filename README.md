@@ -3,8 +3,11 @@
 <a href="#And ... What's Mashya?"><img width="322" align="center" alt=" github.com/hamid  mashya instagram api" src="https://user-images.githubusercontent.com/1645233/165082744-c247ad88-a223-4ff1-96af-b0d1fbfd12f2.png"></a>
   </p>
 
- NodeJS Instagram API.it's like bot that simulate main instagram action, login, register, post, story, like, follow, ...
- this package uses [Playwright](https://playwright.dev/docs/library) under the hood for simulation.this instgram bot consists of these below method:
+ NodeJS Instagram API.it's like bot that simulate main instagram action like login, register, post, story, like, follow and etc.
+
+ This bot makes a full simulation to do not detect by instagram as robot. it uses [Playwright](https://playwright.dev/docs/library) under the hood for simulation.
+ 
+ This instgram bot consists of these below method:
  - Account
    - register
    - login
@@ -136,7 +139,7 @@ Before run any command you should create and start a bot. each bot should manage
 //-1) Setup individual bot for a acoount
     var bot = new MashyaInstagramBot({
         botName: "myinsta",
-        isDevelopment: true, //-** for PRODUCTION enviroments or non GUI os , you should set this options `true`
+        isDevelopment: true, //-** for PRODUCTION enviroments or non GUI os , you should set this options `false`
         logScreenshot:true, 
         log:true,
         //.. see other options in bot docs page
@@ -152,6 +155,7 @@ After create successfully the bot, you could all run available commands. these c
   - any action to individual post,these actions include: like, comment and etc.the post may belong to your account or any other pages account.
 
 
+You could see [example file](src/example.ts) for quick view.
 
 
 ## And ... What's Mashya?
